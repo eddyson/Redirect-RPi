@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    body{
+        background-color: transparent;
+    }
+</style>
+<div class="background">
+    <div class="transbox">
+        <p style="text-align: center">
+            O sistema Rpi-Redirect faz o redirecionamento dos dados entre dois equipamentos, SERAIL <=> TCP/UDP.
+        </p>
+        <p style="text-align: center">
+            <img src="{{url_for('static',filename='RPi-Redirect.fw.png')}}">
+        </p
+    </div>
+</div>
+{% endblock %}

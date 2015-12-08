@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+  div#lista p{
+      font-size: 25px; 
+      text-align: center;
+  }
+  table th{
+      color: blue; 
+      font-size: 18px;
+  }
+  table td{
+      width: 50%;
+  }
+</style>
+<div class="tabbable tabs-stacked"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#lista" data-toggle="tab">Lista</a></li>
+    <li><a href="#network" data-toggle="tab">Terminal</a></li>
+    <li><a href="#conexao" data-toggle="tab">Servidor</a></li>
+    <li><a href="#serial" data-toggle="tab">Serial</a></li>
+    <li><a href="#geral" data-toggle="tab">Geral</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade in active" id="lista">
+      <p>TERMINAL</p>
+      <table class="table table-striped table-bordered table-condensed">
+        <tr>
+          <td>Nome do Local:</td>
+          <td>{{ reg['local'] }}</td>
+        </tr>
+        <tr>
+          <td>Nome do Terminal:</td>
+          <td>{{ reg['dispositivo'] }}</td>
+        </tr>
+        <tr>
+          <td>IP-Terminal:</td>
+          <td>{{ reg['ip_local'] }}</td>
+        </tr>
+        <tr>
+          <td>Máscara de Rede:</td>
+          <td>{{ reg['mascara_rede'] }}</td>
+        </tr>
+        <tr>
+          <td>Porta-Terminal:</td>
+          <td>{{ reg['porta_local'] }}</td>
+        </tr>
+      </table>
+      <p>SERVIDOR</p>
+      <table class="table table-striped table-bordered table-condensed">
+        <td>Protocolo:</td>
+        <td>{{ reg['protocolo'] }}</td>
+        </tr>
+        <tr>
+          <td>IP-Servidor:</td>
+          <td>{{ reg['ip_servidor'] }}</td>
+        </tr>
+        <tr>
+          <td>Porta-Servidor:</td>
+          <td>{{ reg['porta_servidor'] }}</td>
+        </tr>
+      </table>
+      <p>SERIAL</p>
+      <table class="table table-striped table-bordered table-condensed">
+        <td>Taxa de Transmissão:</td>
+        <td>{{ reg['baud_rate'] }}</td>
+        </tr>
+        <tr>
+          <td>Paridade:</td>
+          <td>{{ reg['parity'] }}</td>
+        </tr>
+        <tr>
+          <td>Bits de dados:</td>
+          <td>{{ reg['data_bits'] }}</td>
+        </tr>
+        <tr>
+          <td>Bits de parada:</td>
+          <td>{{ reg['stop_bits'] }}</td>
+        </tr>
+      </table>
+      <p>GERAL</p>
+      <table class="table table-striped table-bordered table-condensed">
+        <td>Arquivo LOG:</td>
+        <td>
+        		{% if reg['arq_log'] == "A" %}
+        			ATIVO
+        		{% else %}
+        			INATIVO
+        		{% endif %}
+        	</td>
+        </tr>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="network">
+      <form action="{{url_for('dados',acao='network')}}" method="POST" name="frmWork" class="form-signin" autocomplete="off">
+        <h2 class="form-signin-heading">TERMINAL</h2>
+        <input type="hidden" name="abas" value="network">
+        Nome do Local:<input value="{{ reg['local'] }}" name="local" type="text" class="input-block-level" placeholder="Nome do local" autofocus="on" style="text-transform: uppercase" pattern="^[A-Za-z0-9-]{3,}" title="Somente Alfanuméricos (min. 3 letras) e (- ífem é permitido)" required>
+        Nome do Terminal:<input  value="{{ reg['dispositivo'] }}" name="dispositivo" type="text" class="input-block-level" placeholder="Lugar instalado" style="text-transform: uppercase" pattern="^[A-Za-z0-9-]{3,}" title="Somente Alfanuméricos (min. 3 letras) e (- ífem é permitido)" required>
+        IP-Terminal:<input  value="{{ reg['ip_local'] }}" name="ip_local" type="text" class="input-block-level" placeholder="127.0.0.1" pattern="^\d{2,}\.\d{1,}\.\d{1,}\.\d{1,}" title="somente Números e (. pontos)" required>
+        Máscara de Rede:<input  value="{{ reg['mascara_rede'] }}" name="mascara_rede" type="text" class="input-block-level" placeholder="255.255.255.0" pattern="^\d{3}\.\d{1,}\.\d{1,}\.\d{1,}" required>
+        Porta-Terminal:<input  value="{{ reg['porta_local'] }}" name="porta_local" type="text" class="input-block-level" placeholder="4001" pattern="^\d{3,}[1-9]" title="Somente Número (min 4 num.)" required>
+        <button class="btn btn-primary" type="submit">Salvar</button>
+      </form>
+    </div>
+    <div class="tab-pane fade" id="conexao">
+      <form action="{{url_for('dados',acao='conexao')}}" method="POST" name="frmConexao" class="form-signin" autocomplete="off">
+        <h2 class="form-signin-heading">SERVIDOR</h2>
+        <input type="hidden" name="abas" value="conexao">
+        Protocolo:<br/>
+        <select name="protocolo">
+          <option value="TCP" {{ prot['TCP'] }}>TCP</option>
+          <option value="UDP" {{ prot['UDP'] }}>UDP</option>
+        </select>
+        <br/>
+        IP-Servidor:<input  value="{{ reg['ip_servidor'] }}" name="ip_servidor" type="text" class="input-block-level" placeholder="127.0.0.1" pattern="\d{2,}\.\d{1,}\.\d{1,}\.\d{1,}" title="somente Números e (. pontos)" required>
+        Porta-Servidor:<input  value="{{ reg['porta_servidor'] }}" name="porta_servidor" type="text" class="input-block-level" placeholder="4001" pattern="\d{4,}" title="Somente Número (min 4 num.)" required>
+        <button class="btn btn-primary" type="submit">Salvar</button>
+      </form>
+    </div>
+    <div class="tab-pane fade" id="serial">
+      <form action="{{url_for('dados',acao='serial')}}" method="POST" name="frmSerial" class="form-signin" >
+        <h2 class="form-signin-heading">SERIAL</h2>
+        <input type="hidden" name="abas" value="serial">
+        Baud Rate:<br/>
+        <select name="baud_rate">
+          <option value="300" {{ baud[300] }}>300</option>
+          <option value="1200" {{ baud[1200] }}>1200</option>
+          <option value="2400" {{ baud[2400] }}>2400</option>
+          <option value="4800" {{ baud[4800] }}>4800</option>
+          <option value="9600" {{ baud[9600] }}>9600</option>
+          <option value="14400" {{ baud[14400] }}>14400</option>
+          <option value="19200" {{ baud[19200] }}>19200</option>
+          <option value="28800" {{ baud[28800] }}>28800</option>
+          <option value="38400" {{ baud[38400] }}>38400</option>
+          <option value="57600" {{ baud[57600] }}>57600</option>
+          <option value="115200" {{ baud[115200] }}>115200</option>
+          <option value="230400" {{ baud[230400] }}>230400</option>
+        </select>
+        <br/>
+        Parity:<br/>
+        <select name="parity">
+          <option value="E" {{ pty['E'] }}>Even</option>
+          <option value="M" {{ pty['M'] }}>Mark</option>
+          <option value="N" {{ pty['N'] }}>None</option>
+          <option value="O" {{ pty['O'] }}>Odd</option>
+          <option value="S" {{ pty['S'] }}>Space</option>
+        </select>
+        <br/>
+        Data Bits:<br/>
+        <select name="data_bits">
+          <option value="5" {{ dbs[5] }}>5</option>
+          <option value="6" {{ dbs[6] }}>6</option>
+          <option value="7" {{ dbs[7] }}>7</option>
+          <option value="8" {{ dbs[8] }}>8</option>
+        </select>
+        <br/>
+        Stop Bits:<br/>
+        <select name="stop_bits">
+          <option value="1"   {{ sbs[1] }}>1</option>
+          <option value="1.5" {{ sbs[1.5] }}>1.5</option>
+          <option value="2"   {{ sbs[2] }}>2</option>
+        </select>
+        <br/>
+        <button class="btn btn-primary" type="submit">Salvar</button>
+      </form>
+    </div>
+    <div class="tab-pane fade" id="geral">
+      <form action="{{url_for('dados',acao='log')}}" method="POST" name="frmGeral" class="form-signin" autocomplete="off">
+        <h2 class="form-signin-heading">GERAL</h2>
+        <input type="hidden" name="abas" value="geral">
+        Arquivo LOG:<br/>
+        <select name="arq_log">
+          <option value="A" {{ alg['A'] }}>ATIVO</option>
+          <option value="I" {{ alg['I'] }}>INATIVO</option>
+        </select>
+        <br/>
+        <button class="btn btn-primary" type="submit">Salvar</button>
+        <br /><br/>
+        <p style="text-align: center;">
+        		{% if down == "S" %}
+                    <a href="{{url_for('download')}}" id="down" class="btn">Download do Arquivo de LOG</a>
+        		{% else %}
+                    <button class='btn' disabled type="button">Download do Arquivo de LOG</button>
+                    <a href="#" id="down" class="btn" disabled="">Download do Arquivo de LOG</a>
+        		{% endif %}
+        </p>
+      </form>
+      <form class="form-signin" autocomplete="off">
+        <p style="text-align: center;">
+          <a href="{{url_for('reboot')}}" class="btn btn-danger" >Reboot</a>
+        </p>
+        <h6 style="text-align: center;">Executa alterações</h6>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

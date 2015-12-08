@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    .hero-unit{
+        visibility: collapse;
+    }
+    body{
+        background-image: url( {{ url_for('static',filename='WallpaperTechnext.png') }} );
+        background-repeat: repeat-x;
+		background-size: 100% 100%
+    }
+    address{
+        color: #FEFF00;
+        font-family: verdana;
+        font-size: 15px;
+		text-align: center;
+        text-shadow: 1px 2px 3px #000;
+    }
+</style>
+<div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <address>
+        <strong>Technext Automação</strong><br>
+        Rua Clélia, 250<br>
+        Perdizes - São Paulo - SP<br>
+        Fone: (11) 3803-9370
+    </address>
+</div>
+{% endblock %}

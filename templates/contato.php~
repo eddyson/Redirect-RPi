@@ -1,0 +1,43 @@
+<?php
+
+include_once './cabecario.php';
+?>
+<style>
+    .hero-unit{
+        visibility: collapse;
+    }
+    body{
+        background-image: url(images/WallpaperTechnext.png);
+        background-repeat: repeat-x;
+    }
+    address{
+        color: #FEFF00;
+        font-size: 15px;
+        text-shadow: 1px 2px 3px #000;
+        font-family: verdana;
+    }
+</style>
+<div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <address style="text-align: center;">
+        <strong>Technext Automação</strong><br>
+        Rua Clélia, 250<br>
+        Perdizes - São Paulo - SP<br>
+        Fone: (11) 3803-9370
+    </address>
+</div>
+<?php
+
+include_once './rodape.php';
+?>

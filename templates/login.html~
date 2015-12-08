@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
+<div>
+    <form action="{{url_for('login')}}" method="POST" name="frmLogin" class="form-signin" autocomplete="off">
+        <h2 class="form-signin-heading">Login</h2>
+        <input name="nome" type="text" class="input-block-level" placeholder="Usuário" autofocus="on" required>
+        <input name="senha" type="password" class="input-block-level" placeholder="Senha" required>
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Me lembrar
+        </label>
+        <button class="btn btn-primary" type="submit">Logar</button>
+    </form>
+    {% with messages get_flashed_messages() %}
+    {% if messages %}
+        <div class='alert alert-danger'><center><strong>ERRO!!!</strong> {{messages[0]}}</center></div>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

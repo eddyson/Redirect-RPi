@@ -1,0 +1,64 @@
+<?php
+
+include_once './db.php';
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+$abas = filter_input(INPUT_POST, "abas");
+//network
+$local = strtoupper(filter_input(INPUT_POST, "local"));
+$dispositivo = strtoupper(filter_input(INPUT_POST, "dispositivo"));
+$ip_local = filter_input(INPUT_POST, "ip_local");
+$mascara_rede = filter_input(INPUT_POST, "mascara_rede");
+$porta_local = filter_input(INPUT_POST, "porta_local");
+//conexão
+$protocolo = filter_input(INPUT_POST, "protocolo");
+$ip_servidor = filter_input(INPUT_POST, "ip_servidor");
+$porta_servidor = filter_input(INPUT_POST, "porta_servidor");
+//serial
+$baud_rate = filter_input(INPUT_POST, "baud_rate");
+$parity = filter_input(INPUT_POST, "parity");
+$data_bits = filter_input(INPUT_POST, "data_bits");
+$stop_bits = filter_input(INPUT_POST, "stop_bits");
+$arq_log = filter_input(INPUT_POST, "arq_log");
+//
+switch ($abas) {
+  case "network": {
+      $sql = "UPDATE terminal SET "
+              . "local = '$local',"
+              . "dispositivo = '$dispositivo',"
+              . "ip_local = '$ip_local',"
+              . "mascara_rede = '$mascara_rede',"
+              . "porta_local = '$porta_local'";
+      $rs = $db->query($sql);
+      header("location: index.php");
+      break;
+    }
+  case "conexao": {
+      $sql = "UPDATE terminal SET "
+              . "protocolo = '$protocolo',"
+              . "ip_servidor = '$ip_servidor',"
+              . "porta_servidor = '$porta_servidor'";
+      $rs = $db->query($sql);
+      header("location: index.php");
+      break;
+    }
+  case "serial": {
+      $sql = "UPDATE terminal SET "
+              . "baud_rate = '$baud_rate',"
+              . "parity = '$parity',"
+              . "data_bits = '$data_bits',"
+              . "stop_bits = '$stop_bits'";
+      $rs = $db->query($sql);
+      header("location: index.php");
+      break;
+    }
+  case "geral": {
+      $sql = "UPDATE terminal SET arq_log = '$arq_log'";
+      $rs = $db->query($sql);
+      header("location: index.php");
+      break;
+    }
+}

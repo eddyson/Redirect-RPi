@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block body %}
+    <h1>Sobre!</h1>
+    <p>Meu nome é Edson e sou um Python/Flask ninja!.</p>
+    <hr id='content' >
+{% endblock %}
